@@ -662,15 +662,28 @@ a.sidebar-nav-subitem:focus {
   position: relative;
 }
 
+.post hr {
+  background-color: var(--heading-color);
+  margin: 1rem 0rem;
+  width: 30rem;
+  height: 2px;
+  position: left;
+}
+
 .post-title h2 {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0rem;
+}
+
+.post-body h3 {
+  margin-bottom: 1rem;
+  margin-top: 2rem;
 }
 
 /* Meta data line below post title */
 .post-date {
   display: block;
-  margin-top: 0.5rem;
   color: var(--post-date-color);
+  font-size: 0.8rem;
 }
 
 .post-body p:first-child {
