@@ -2,3 +2,7 @@
 	path = public
 	url = https://github.com/dkharazi/dkharazi.github.io.git
 	branch = master
+[submodule "content/notes"]
+	path = content/notes
+	url = https://github.com/dkharazi/notes.git
+	branch = master
