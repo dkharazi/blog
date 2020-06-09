@@ -1,7 +1,7 @@
 ---
 title: "Building a Prototyping Pipeline in Python"
 date: "2020-01-10"
-draft: true
+draft: false
 katex: true
 ---
 

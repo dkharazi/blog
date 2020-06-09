@@ -1,7 +1,7 @@
 ---
 title: "Running Hugo on GitHub"
 date: "2019-07-10"
-draft: true
+draft: false
 katex: true
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: "Learning Git using Google Docs"
 date: "2019-12-20"
-draft: true
+draft: false
 katex: true
 ---
 

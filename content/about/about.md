@@ -1,7 +1,7 @@
 ---
 title: "About"
 date: 2020-01-07T17:33:47-05:00
-draft: true
+draft: false
 ---
 
 I live in Columbus, Ohio and work on a data science team at Abercrombie.
