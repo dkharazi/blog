@@ -46,6 +46,33 @@
   --blockquote-border: #e5e5e5
 }
 
+@media (prefers-color-scheme: dark) {
+    :root {
+        --body-bg: #282c34;
+        --body-color: #abb2bf;
+        --secondary-color: rgba(255, 255, 255, 0.5);
+        --link-color: rgba(255, 255, 255, 0.75);
+        --link-color-hover: #fff;
+        --link-border-color: rgba(255, 255, 255, 0.25);
+        --link-border-color-hover: rgba(255, 255, 255, 0.5);
+        --heading-color: #dee2e6;
+        --kbd-color: rgba(255, 255, 255, 0.5);
+        --kbd-bg: rgba(255, 255, 255, 0.1);
+        --hr-color: rgba(255, 255, 255, 0.1);
+        --pre-bg: rgba(0, 0, 0, 0.1);
+        --code-color: #e5c07b;
+        --code-snippet-border: rgba(255, 255, 255, 0.1);
+        --blockquote-border: rgba(255, 255, 255, 0.1);
+    }
+    img {
+        opacity: 0.75;
+        transition: opacity 0.5s ease-in-out;
+    }
+    img:hover {
+        opacity: 1;
+    }
+}
+
 * {
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
