@@ -1,15 +1,19 @@
 {{ partial "masthead.html" . }}
 
 <div class="container">
-  <h2>{{ .Title }}</h2>
-  <div class="notes-list">
-    {{ range .Data.Pages }}
-    <ul>
-      <li>
-        <a href="{{ .Permalink }}">{{ .Title }}</a>
-      </li>
-    </ul>
-    {{ end }}
+  <div class="body">
+    <div class="post-title">
+      <h2>{{ .Title }}</h2>
+    </div>
+    <div class="notes-list">
+      {{ range .Data.Pages }}
+      <ul>
+        <li>
+          <a href="{{ .Permalink }}">{{ .Title }}</a>
+        </li>
+      </ul>
+      {{ end }}
+    </div>
   </div>
 </div>
 
