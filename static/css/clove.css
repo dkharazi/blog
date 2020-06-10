@@ -815,6 +815,13 @@ a.sidebar-nav-subitem:focus {
 	box-shadow: var(--shadow-within), var(--shadow-under);
 }
 
+@media (prefers-color-scheme: dark) {
+  .notes-masthead {
+    background-color: var(--body-bg);
+    box-shadow: none;
+  }
+}
+
 .notes-list {
   margin-bottom: 4rem;
 }
