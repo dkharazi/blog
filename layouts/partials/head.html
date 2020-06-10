@@ -7,9 +7,9 @@
 
   <title>
     {{ if .IsHome }}
-      {{ .Site.Params.Title }} &middot; {{ .Site.Params.Tagline }}
+      {{ .Site.Title }} &middot; {{ .Site.Params.Tagline }}
     {{ else }}
-      {{ .Title }} &middot; {{ .Site.Params.Title }}
+      {{ .Site.Title }} &middot; {{ .Title }}
     {{ end }}
   </title>
 

@@ -1,5 +1,9 @@
 baseURL = "https://dkharazi.github.io/"
 languageCode = "en-us"
 title = "dkhara"
+author = "Darius Kharazi"
 pygmentsUseClasses = true
 pygmentsCodefences = true
+
+[params]
+  tagline = "Data Science"
