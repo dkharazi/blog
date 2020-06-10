@@ -71,10 +71,6 @@
     img:hover {
         opacity: 1;
     }
-    .masthead {
-        background-color: var(--body-bg);
-        box-shadow: none;
-    }
 }
 
 * {
@@ -431,6 +427,13 @@ tbody tr:nth-child(odd) th {
   }
   .masthead {
     text-align: right;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .masthead {
+    background-color: var(--body-bg);
+    box-shadow: none;
   }
 }
 
