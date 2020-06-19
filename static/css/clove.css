@@ -6,6 +6,7 @@
  * Messages
  * Wrapper
  * Container
+* Anchor links
  * Masthead
  * Navigation
  * Sidebar
@@ -27,14 +28,14 @@
 :root {
   --font-default: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   --font-secondary: "PT Serif", Georgia, "Times New Roman", serif;
-  --body-bg: #fff;
+  --body-bg: #fafafa;
   --body-color: #515151;
   --link-color: #7b4e83;  /* #005B81; */
   --link-color-hover: #bf616a;
   --link-border-color: rgba(0,0,0,.25);
   --heading-color: #333;
   --masthead-bg: #268bd2;
-  --masthead-color: #fff;
+  --masthead-color: #fafafa;
   --shadow-under: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
   --shadow-within: inset 0 -10px 100px -10px #1b7bbf;
   --post-date-color: #ccc;
@@ -43,7 +44,8 @@
   --kbd-bg: #eee;
   --code-color: rgba(212, 73, 80, 1);
   --code-snippet-border: rgba(0,0,0,.05);
-  --blockquote-border: #e5e5e5
+  --blockquote-border: #e5e5e5;
+  --blockquote-color: #7a7a7a;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -140,7 +142,10 @@ ul+h2,
 ul+h3,
 ol+h1,
 ol+h2,
-ol+h3 {
+ol+h3,
+.highlight+h1,
+.highlight+h2,
+.highlight+h3 {
     margin-top: 1.5rem
 }
 
@@ -237,14 +242,14 @@ code {
 pre {
   display: block;
   margin: 0 0 1rem;
-  padding: 1rem;
   font-size: .8rem;
   line-height: 1.4;
-  white-space: pre;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 40px;
+  margin-inline-end: 40px;
   white-space: pre-wrap;
-  word-break: break-all;
   word-wrap: break-word;
-  background-color: #f9f9f9;
 }
 
 pre code {
@@ -292,10 +297,10 @@ pre code {
 
 /* Quotes */
 blockquote {
-  padding: .5rem 1rem;
-  margin: .8rem 0;
-  color: #7a7a7a;
-  border-left: .25rem solid #e5e5e5;
+  padding: 0 0 0 1.5rem;
+  margin: 0 2rem 1rem -2rem;
+  color: var(--blockquote-color);
+  border-left: .5rem solid var(--blockquote-border);
 }
 
 blockquote p:last-child {
@@ -399,6 +404,40 @@ tbody tr:nth-child(odd) th {
 .body a {
   font-weight: 500;
   text-decoration: underline;
+}
+
+
+/*
+ * Anchor Links
+ *
+ * A web link that leapfrogs users to a point on a page.
+ */
+
+.anchorjs-link {
+  float: left;
+  width: 1em;
+  height: 1em;
+  margin-left: -1.2em;
+  opacity: 0;
+  text-align: center;
+}
+
+a.anchorjs-link {
+  text-decoration: none;
+  color: var(--heading-color);
+}
+
+.post-body .anchorjs-link {
+  border-bottom: 0;
+}
+
+*:hover > .anchorjs-link,
+.anchorjs-link:focus {
+  opacity: 1;
+  -webkit-transition: color 0.16s linear;
+  -moz-transition: color 0.16s linear;
+  -o-transition: color 0.16s linear;
+  transition: color 0.16s linear;
 }
 
 
@@ -723,6 +762,10 @@ a.sidebar-nav-subitem:focus {
   font-size: 0.8rem;
 }
 
+.post-title h1 {
+  margin-bottom: 0rem;
+}
+
 /* Related posts */
 .related {
   padding-top: 2rem;
@@ -839,7 +882,7 @@ a.sidebar-nav-subitem:focus {
 }
 
 .notes-title {
-  color: #fff;
+  color: var(--masthead-color);
   font-weight: bold;
   font-size: 3rem;
   padding-bottom: 2rem;

@@ -1,6 +1,6 @@
 ---
 title: "Running Hugo on GitHub"
-date: "2019-07-10"
+date: "2018-09-10"
 draft: false
 katex: true
 ---

@@ -1,6 +1,6 @@
 baseURL = "https://dkharazi.github.io/"
 languageCode = "en-us"
-title = "dkhara"
+title = "dfk"
 author = "Darius Kharazi"
 pygmentsUseClasses = true
 pygmentsCodefences = true
