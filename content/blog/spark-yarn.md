@@ -1,6 +1,6 @@
 ---
 title: "Testing Spark Applications with YARN"
-date: "2020-05-10"
+date: "2019-06-17"
 draft: false
 katex: true
 ---

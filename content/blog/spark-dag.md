@@ -1,6 +1,6 @@
 ---
 title: "Visualizing DAGs in Spark"
-date: "2020-05-04"
+date: "2019-02-27"
 draft: false
 katex: true
 ---
@@ -126,4 +126,5 @@ Recall, the number of tasks within a stage equals the number of partitions in an
 ```
 
 Since Spark assigns the number of paritions of an `RDD` during initialization, the number of tasks are determined after shuffling as well. This is because Spark creates a new `RDD` after shuffling. This object is called a `ShuffleRDD`. For a more detailed description of how tasks are separated and organized in Spark, refer to this [post](https://stackoverflow.com/a/37759913/12777044).
+
 

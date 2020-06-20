@@ -1,6 +1,6 @@
 ---
 title: "Testing Spark Applications in Standalone"
-date: "2020-05-09"
+date: "2019-06-06"
 draft: false
 katex: true
 ---

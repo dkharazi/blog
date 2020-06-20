@@ -1,6 +1,6 @@
 ---
 title: "Data Locality in Spark"
-date: "2020-05-08"
+date: "2019-05-12"
 draft: false
 katex: true
 ---

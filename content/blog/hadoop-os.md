@@ -1,6 +1,6 @@
 ---
 title: "Hadoop as a Distributed OS"
-date: "2020-05-02"
+date: "2018-10-22"
 draft: false
 katex: true
 ---

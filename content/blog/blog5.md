@@ -1,6 +1,6 @@
 ---
 title: "Pandas Performance Test with pyarrow"
-date: "2019-09-10"
+date: "2020-01-02"
 draft: false
 katex: true
 ---

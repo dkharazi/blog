@@ -6,7 +6,7 @@
  * Messages
  * Wrapper
  * Container
-* Anchor links
+ * Anchor links
  * Masthead
  * Navigation
  * Sidebar
@@ -16,6 +16,7 @@
  * Notes
  * Pagination
  * Reverse layout
+ * Web services
  */
 
 
@@ -744,7 +745,7 @@ a.sidebar-nav-subitem:focus {
 
 .page,
 .post {
-  margin-bottom: 4rem;
+  margin-bottom: 3rem; /* withour hr: margin-bottom: 4rem; */
 }
 
 .post {
@@ -803,6 +804,10 @@ a.sidebar-nav-subitem:focus {
  * Each blog post is archived and displayed on the home page
  * as a list and organized by date.
  */
+
+.archives {
+  margin-bottom: 4rem;
+}
 
 .archive-date {
   float: right;
@@ -1021,3 +1026,13 @@ a.pagination-item:hover {
 }
 
 
+/*
+ * Web services
+ *
+ * Web services is used throughout notes and posts,
+ * such as utteranc.es
+ */
+
+.utterances {
+  margin-bottom: 3rem;
+}

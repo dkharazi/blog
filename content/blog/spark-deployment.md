@@ -1,6 +1,6 @@
 ---
 title: "Spark Deployment Modes"
-date: "2020-05-07"
+date: "2019-03-28"
 draft: false
 katex: true
 ---

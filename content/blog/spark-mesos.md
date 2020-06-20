@@ -1,6 +1,6 @@
 ---
 title: "Testing Spark Applications with Mesos"
-date: "2020-05-11"
+date: "2019-07-04"
 draft: false
 katex: true
 ---
