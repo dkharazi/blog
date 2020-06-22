@@ -11,6 +11,7 @@ This post walks through an example of a cluster running in standalone mode. In t
 
 - [Setting up a SparkSession](#setting-up-a-sparksession)
 - [Launching Daemons](#launching-daemons)
+- [Accessing Web UI for Daemons](#accessing-web-ui-for-daemons)
 - [Caveat about PySpark Applications](#caveat-about-pyspark-applications)
 - [Launching Applications in Client Mode](#launching-applications-in-client-mode)
 - [Launching Applications in Cluster Mode](#launching-applications-in-cluster-mode)
@@ -33,7 +34,7 @@ spark.driver.memory=5g
 # test.py
 >>> from pyspark import SparkContext
 >>> file = "~/data.txt"  # path of data
->>> masterurl = 'spark://192.168.1.8:7077'
+>>> masterurl = 'spark://localhost:7077'
 >>> sc = SparkContext(masterurl, 'myapp')
 >>> data = sc.textFile(file).cache()
 >>> num_a = data.filter(lambda s: 'a' in s).count()
@@ -49,7 +50,7 @@ $ ./sbin/start-master.sh
 
 2. Start a worker daemon
 ```bash
-$ ./sbin/start-slave.sh spark://192.168.1.8:7077
+$ ./sbin/start-slave.sh spark://localhost:7077
 ```
 
 3. Start a history daemon
@@ -60,7 +61,7 @@ $ ./sbin/start-history-server.sh
 4. Start a Spark application
 ```bash
 $ ./bin/spark-submit \
-    --master spark://192.168.1.8:7077 \
+    --master spark://localhost:7077 \
     test.py
 ```
 5. Stopping the daemons
@@ -70,6 +71,15 @@ $ ./sbin/stop-slave.sh
 $ ./sbin/stop-history-server.sh 
 ```
 
+## Accessing Web UI for Daemons
+Spark provides a web UI for each initialized daemon. By default, Spark creates a web UI for the master on port `8080`. The workers can take on different portsand can be accessed via the master web UI. The history server can be accessed on port `18080` by default. The table below summarizes the default locations for each web UI.
+
+| Daemon  | Port    |
+| ------- | ------- |
+| Master  | `8080`  |
+| Worker  | `8081`  |
+| History | `18080` |
+
 ## Caveat about PySpark Applications
 Notice, launching an application in client mode doesn't seem to trigger a driver according to the master's web UI. This doesn't mean a driver isn't launched in client mode. The driver is still launched within the spark-submit process. However, the master's web UI omits driver information if the application is running in client mode.
 
@@ -77,7 +87,7 @@ So, we may want to launch an application in cluster mode now. However, running a
 
 ```bash
 $ ./bin/spark-submit \
-    --master spark://192.168.1.8:7077 \
+    --master spark://localhost:7077 \
     --deploy-mode cluster
     test.py
 Exception in thread "main" org.apache.spark.SparkException: Cluster deploy mode is currently not supported for python applications on standalone clusters.
