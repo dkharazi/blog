@@ -9,7 +9,7 @@ This post provides an overview of the different deployment modes in Spark and ho
 
 An application can be deployed to a cluster in one of two modes: *cluster* or *client* mode. These modes determine the location of the driver process. By default, Spark will run a driver in an application on the client JVM. Python applications can't run in cluster mode on a standalone cluster.
 
-To walk through an example demonstrating the interaction between a driver program and cluster components, refer to the [my other post]().
+To walk through an example demonstrating the interaction between a driver program and cluster components in standalone mode, refer to the [my other post](https://dkharazi.github.io/blog/spark-standalone/).
 
 ## Client-Deploy Mode
 As stated previously, the deployment mode determines the location of the driver process. In client-deploy mode, the driver program runs on the client's JVM process. Meaning, the driver program runs on the client's machine. This is the same machine as the one that called the `spark-submit` command, which implies the driver process sits outside of the cluster. Generally, applications deployed in client mode perform the following steps:

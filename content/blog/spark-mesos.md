@@ -5,14 +5,14 @@ draft: false
 katex: true
 ---
 
-This post walks through an example of running a cluster using a Mesos cluster manager on Mac OS. In the coming posts, we'll explore other examples, including clusters running a standalone cluster manager and a cluster manager in YARN.
+This post walks through an example of running a cluster using a Mesos cluster manager on Mac OS. In the coming posts, we'll explore other examples, including clusters running a [standalone cluster manager](https://dkharazi.github.io/blog/spark-standalone/) and a [cluster manager in YARN](https://dkharazi.github.io/blog/spark-yarn/).
 
 ## Table of Contents
 - [Describing the Mesos Architecutre](#describing-the-mesos-architecture)
 - [Comparing Mesos and Standalone Architectures](#comparing-mesos-and-standalone-architectures)
 - [Setting up Mesos](#setting-up-mesos)
 - [Setting up a SparkSession](#setting-up-a-sparksession)
-- [Launching YARN Daemons](#launching-yarn-daemons)
+- [Launching Mesos Daemons](#launching-mesos-daemons)
 - [Launching Spark Daemons](#launching-spark-daemons)
 - [Accessing Web UI for Daemons](#accessing-web-ui-for-daemons)
 - [Launching Applications in Client Mode](#launching-applications-in-client-mode)
