@@ -43,7 +43,7 @@ Now, let's return to our previous discussion about the `DAG` object. When an act
 
 ![SparkTaskLifecycle](/img/sparktasks.svg)
 
-The number of tasks is equal to the number of partitions. The number of stages is equal to the number of wide transformations. For examples that may help illustrate these concepts, refer to my [next post](https://dkharazi.github.io/blog/spark-dag/).
+The number of tasks is equal to the number of partitions. The number of stages is equal to the number of wide transformations. For examples that may help illustrate these concepts, refer to my [next post](/blog/spark-dag/).
 
 ## Types of Transformations
 There are two types of transformations that can be applied to `RDDs`: narrow transformations and wide transformations. Narrow transformations refer to transformations where each partition contributes to one stage only. These include transformations like `map`, `filter`, etc. Wide transformations refer to transformations where each partition contributes to many stages. In Spark, this concept is called *shuffling*.

@@ -5,7 +5,7 @@ draft: false
 katex: true
 ---
 
-This post provides an overview of different types of data locality in Spark. In the coming posts, we'll dive deeper into more low-level concepts. Meaning, we'll explore the Spark internals using examples. Then, we'll explore some examples of running spark applications in a cluster with a [standalone cluster manager](https://dkharazi.github.io/blog/spark-standalone/), [YARN cluster manager](https://dkharazi.github.io/blog/spark-yarn/), and [Mesos cluster manager](https://dkharazi.github.io/blog/spark-mesos/).
+This post provides an overview of different types of data locality in Spark. In the coming posts, we'll dive deeper into more low-level concepts. Meaning, we'll explore the Spark internals using examples. Then, we'll explore some examples of running spark applications in a cluster with a [standalone](/blog/spark-standalone/) cluster manager, [YARN](/blog/spark-yarn/) cluster manager, and [Mesos](/blog/spark-mesos/) cluster manager.
 
 ## Defining Data Locality
 In Spark, tasks are run as close to the location of data as possible. Meaning, executors are selected based on their proximity to requested data within the cluster. This notion is referred to as *data locality*. Since the selection of executors is affected, data locality influences job scheduling as a consequence. To find optimal executors closest to the data, Spark maintains a list of preferred executors for each partition.

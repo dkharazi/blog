@@ -7,6 +7,23 @@ katex: true
 
 This post provides a high-level introduction to generic objects in the Spark API, along with the responsibilities for each object. In the coming posts, we'll dive deeper into more low-level concepts. Meaning, we'll explore the Spark internals, along with some examples.
 
+## Table of Contents
+- [Two Common Questions](#the-two-common-questions)
+- [Driver Program](#defining-the-driver-program)
+- [Spark Context](#defining-a-spark-context)
+- [Spark Scheduler](#defining-the-spark-scheduler)
+- [Cluster Manager](#defining-the-cluster-manager)
+- [Workers and Executors](#defining-workers-and-executors)
+
+## The Two Common Questions
+A Spark application runs on a cluster with either a standalone cluster manager, YARN cluster manager, or Mesos cluster manager. Although these clusters use very different component comparatively, they still need to answer the same two questions regardless of how each one is set up. Specifically, these questions relate to:
+- Job scheduling
+- Resource scheduling
+
+Job scheduling refers to determining which executors run a given set of tasks. To do this, we must know what resources are available, which includes CPU and RAM resources. Job scheduling is typically performed by Spark's scheduler, which will be defined in detail later.
+
+As stated previously, we must know the available resources in order to perform job scheduling. Implying, job scheduling requires resource scheduling, in order to function properly. Resource scheduling refers to determining which executors receive available resources. Specifically, this involves assigning CPU and RAM resources to executors, which represent units of processing in a cluster.
+
 ## Defining the Driver Program
 A driver program represents a Spark program. During the execution of a driver program, it requests for executor processes from the cluster manager. In particular, it requests for CPU and memory resources. Then, it organizes its application components into stages and tasks. The driver program is responsible for defining the tasks sent to executors of a Spark cluster. Then, it collects results from the executors. A driver program is represented as the following objects:
 - A Spark `Scheduler`
@@ -41,6 +58,6 @@ A cluster manager instructs workers to start executor processes when a driver pr
 In particular, resource scheduling involves distributing the resources of a cluster requested by several applications. Meaning, a cluster manager will make its cluster's resources available to applications via executors. In other words, the cluster manager allocates its cluster's CPU and memory resources to its executors for any applications to use.
 
 ## Defining Workers and Executors
-Each worker runs on a node in its cluster. A worker is responsible for launching executors and monitoring executors for the cluster manager, in case of any failures. Additionally, it is used for launching the driver process when `-deploy-mode=cluster`. Notice, certain components behave differently depending on the deployment mode of an application. For more information about these behaviors, refer to my [next post](https://dkharazi.github.io/blog/spark-deployment/).
+Each worker runs on a node in its cluster. A worker is responsible for launching executors and monitoring executors for the cluster manager, in case of any failures. Additionally, it is used for launching the driver process when `-deploy-mode=cluster`. Notice, certain components behave differently depending on the deployment mode of an application. For more information about these behaviors, refer to my [next post](/blog/spark-deployment/).
 
 Similarly, each executors runs on a node in its cluster. There can only be one executor per worker. An executor is responsible for accepting tasks from the driver program, executing those tasks, and returning any results to the driver. Each executor has several *tasks slots*. These slots are used to run tasks in parallel on the executor. Specifically, these tasks are implemented as threads, rather than individual CPU cores. Indicating, they do not correspond to the number of CPU cores on a machine.

@@ -5,7 +5,7 @@ draft: false
 katex: true
 ---
 
-This post walks through an example of a cluster running in standalone mode. In the coming posts, we'll explore other examples, including clusters running a [YARN cluster manager](https://dkharazi.github.io/blog/spark-yarn/) and [Mesos cluster manager](https://dkharazi.github.io/blog/spark-mesos/).
+This post walks through an example of a cluster running in standalone mode. In the coming posts, we'll explore other examples, including clusters running a [YARN](/blog/spark-yarn/) cluster manager and [Mesos](/blog/spark-mesos/) cluster manager.
 
 ## Table of Contents
 

@@ -5,7 +5,7 @@ draft: false
 katex: true
 ---
 
-This post walks through an example of running a cluster using a Mesos cluster manager on Mac OS. In the coming posts, we'll explore other examples, including clusters running a [standalone cluster manager](https://dkharazi.github.io/blog/spark-standalone/) and a [cluster manager in YARN](https://dkharazi.github.io/blog/spark-yarn/).
+This post walks through an example of running a cluster using a Mesos cluster manager on Mac OS. In the coming posts, we'll explore other examples, including clusters running a [standalone](/blog/spark-standalone/) cluster manager and a cluster manager in [YARN](/blog/spark-yarn/).
 
 ## Table of Contents
 - [Describing the Mesos Architecutre](#describing-the-mesos-architecture)

@@ -38,6 +38,10 @@ katex: true
 		- Doesn't need to perform data serialization or deserialization when moving data from one application to another
 		- https://stackoverflow.com/a/56481636/12777044
 
+## Problem
+At Cloudera, I started looking at Impala, Kudu, Spark, Parquet, and other such big data storage and analysis systems. Since Python and pandas had never been involved with any of these projects, building integrations with them was difficult. The single biggest problem was data interchange, particularly moving large tabular datasets from one process's memory space to another's. It was extremely expensive, and there was no standard solution for doing it. RPC-oriented serialization protocols like Thrift and Protocol Buffers were too slow and too general purpose.
+https://wesmckinney.com/blog/apache-arrow-pandas-internals/
+
 ---
 
 References
