@@ -60,7 +60,7 @@ As of June 2020, the pandas library provides wrapper functions that use a Parque
 
 According to the [pandas documentation](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_parquet.html#pandas.read_parquet), an engine parameter can be specified, which refers to the Parquet library to use. Its default behavior is to try ‘pyarrow’, falling back to ‘fastparquet’ if ‘pyarrow’ is unavailable.
 
-Seeing as the development towards pyarrow and parquet-cpp is still progressing, we may be interested in performance benchmarks for reading from and writing to Parquet files, while using the above functions in their current state. For a more detailed analysis of performance benchmarks, refer to [this article](https://wesmckinney.com/blog/python-parquet-update/).
+Seeing as the development towards PyArrow and parquet-cpp is still progressing, we may be interested in performance benchmarks for reading from and writing to Parquet files, while using the above functions in their current state. For a more detailed analysis of performance benchmarks, refer to [this article](https://wesmckinney.com/blog/python-parquet-update/).
 
 ## Setting Up Performance Tests
 
@@ -115,7 +115,7 @@ Prior to executing the tests below, the HDF and Parquet files were converted to 
 3.62
 ```
 
-After reading in each file in the various formats, the final test delivered the best performance. Using the `pyarrow` Parquet engine, the taxi trips dataset, formatted as a Parquet file, only took an average of 3.62 seconds for reading in the entire dataset.
+After reading in each file in the various formats, the final test delivered the best performance. Using the PyArrow Parquet engine, the taxi trips dataset, formatted as a Parquet file, only took an average of 3.62 seconds for reading in the entire dataset.
 
 Now, let's test the performance of writing to similar files.
 
@@ -150,3 +150,6 @@ Now, let's test the performance of writing to similar files.
 >>> round(s/itr, 2)
 4.96
 ```
+
+This example was run locally on my laptop without testing other types of datasets using various styles of compression styles, such as uncompressed, snappy, and gzip. Thus, the performance benchmarks should not be taken precisely. Regardless, there clearly seems to be a huge performance boost when using the PyArrow engine. To learn more about the other use cases for PyArrow, refer to [my next post](/blog/pyarrow/).
+
