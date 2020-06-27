@@ -1,6 +1,6 @@
 ---
 title: "Performance Benchmarks: PyArrow"
-date: "2020-01-03"
+date: "2020-02-11"
 draft: false
 katex: true
 ---
