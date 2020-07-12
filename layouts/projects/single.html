@@ -1,0 +1,16 @@
+{{ partial "masthead.html" . }}
+  
+<div class="container">
+  <div class="body">
+    <div class="post">
+      <div class="post-title">
+        <h1>{{ .Title }}</h1>
+      </div>
+      <div class="post-body">{{ .Content }}</div>
+    </div>
+  </div>
+</div>
+
+<hr>
+{{ partial "comments.html" . }}
+{{ partial "footer.html" . }}
