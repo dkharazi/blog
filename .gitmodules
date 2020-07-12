@@ -6,3 +6,6 @@
 	path = content/notes
 	url = https://github.com/dkharazi/notes.git
 	branch = master
+[submodule "content/projects/trips"]
+	path = content/projects/trips
+	url = https://github.com/dkharazi/trips.git
