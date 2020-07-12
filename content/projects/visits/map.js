@@ -35,6 +35,16 @@ var svg = d3.select(".map")
 var tooltip = d3.select(".map")
                 .select(".tooltip");
 
+// Convert circle to path
+function circleToPath(cx, cy, r) {
+    return "M " + cx + " " + cy + " m -" + r + ", 0 a " + r + "," + r + " 0 1,0 " + r*2 + ",0" + " a " + r + "," + r + " 0 1,0 -" + r*2 + ",0";
+}
+
+// Convert star to paths
+function starToPath(x, y) {
+    return "M " + (0+x) + " " + (4+y) + " L " + (6.113+x) + " " + (8.414+y) + " L " + (3.804+x) + " " + (1.236+y) + " L " + (9.891+x) + " " + (y-3.214) + " L " + (2.351+x) + " " + (y-3.236) + " L " + (0+x) + " " + (y-10.4) + " L " + (x-2.351) + " " + (y-3.236) + " L " + (x-9.891) + " " + (y-3.214) + " L " + (x-3.804) + " " + (1.236+y) + " L " + (x-6.113) + " " + (8.414+y) + " L " + (0+x) + " " + (4+y);
+}
+
 // Load GeoJSON data and merge with states data
 d3.json("states.json").then(function(json) {
 
@@ -63,32 +73,36 @@ d3.json("states.json").then(function(json) {
             });
 
         // Plot city paths by binding CSV data to SVG
-        svg.selectAll("circle")
+        svg.selectAll("path .circle")
             .data(data)
-            .join("circle")
+            .join("path")
             .attr("class", function(d) {
                 var city = " " + d.place.toLowerCase().replace(/\ /g,"-");
-                return (d.hasVisited==1) ? "map-visited"+city:"map-will-visit"+city;
+                return (d.hasVisited==1) ? "circle map-visited"+city:"circle map-will-visit"+city;
             })
-            .attr("cx", function(d) {
-                return projection([d.lon, d.lat])[0];
+            .attr("d", function(d) {
+                var cx = projection([d.lon, d.lat])[0];
+                var cy = projection([d.lon, d.lat])[1];
+                var r = 4;
+                return circleToPath(cx, cy, r);
             })
-            .attr("cy", function(d) {
-                return projection([d.lon, d.lat])[1];
-            })
-            .attr("r", 4)
-            .attr("fill", function(d) {
+            .style("fill", function(d) {
                 return (d.hasVisited==1) ? "rgb(217,91,67)":"rgb(250,250,250)";
             })
-            .attr("stroke", "rgb(217,91,67)")
-            .attr("stroke-width", 2)
+            .style("stroke", "rgb(217,91,67)")
+            .style("stroke-width", 2)
             .style("opacity", 0.85)
             .on("mouseover", function(d) {
                 var height = document.querySelector(".post-title").offsetHeight;
                 var left = document.querySelector(".container").offsetLeft;
                 d3.select(this)
                     .transition()
-                    .attr("r", 8);
+                    .attr("d", function(d) {
+                        var cx = projection([d.lon, d.lat])[0];
+                        var cy = projection([d.lon, d.lat])[1];
+                        var r = 8;
+                        return circleToPath(cx, cy, r);
+                    });
                 tooltip.transition()
                     .duration(200)
                     .style("opacity", .9);      
@@ -99,7 +113,12 @@ d3.json("states.json").then(function(json) {
             .on("mouseout", function(d) {    
                 d3.select(this)
                     .transition()
-                    .attr("r", 4);   
+                    .attr("d", function(d) {
+                        var cx = projection([d.lon, d.lat])[0];
+                        var cy = projection([d.lon, d.lat])[1];
+                        var r = 4;
+                        return circleToPath(cx, cy, r);
+                    });  
                 tooltip.transition()
                     .duration(500)      
                     .style("opacity", 0);   
@@ -145,34 +164,38 @@ d3.select(".legend-cities")
     .append("svg")
     .attr("width", 16)
     .attr("height", 16)
-    .append("circle")
-    .join("circle")
+    .append("path")
+    .join("path")
     .attr("class", function(d,i) {
-        return (i==1) ? "map-visited":"map-will-visit";
+        return (i==1) ? "circle map-visited":"circle map-will-visit";
     })
-    .attr("cx", 8)
-    .attr("cy", 8)
-    .attr("r", 4)
-    .attr("stroke", "rgb(217,91,67)")
-    .attr("stroke-width", 2)
-    .attr("fill", function(d) { return d; });
+    .attr("d", function(d) {
+        return circleToPath(8, 8, 4);
+    })
+    .style("stroke", "rgb(217,91,67)")
+    .style("stroke-width", 2)
+    .style("fill", function(d) { return d; });
 
 // Event handlers for legend
 d3.select(".legend")
-    .selectAll("circle")
+    .selectAll(".circle")
     .on("mouseover", function() {
         d3.select(this)
             .transition()
-            .attr("r", 7);  
+            .attr("d", function(d) {
+                return circleToPath(8, 8, 7);
+            });
     })
     .on("mouseout", function() {    
         d3.select(this)
             .transition()
-            .attr("r", 4); 
+            .attr("d", function(d) {
+                return circleToPath(8, 8, 4);
+            });
     })
     .on("click", function() {
-        var pointClass = "." + this.getAttribute("class");
-        currentOpacity = d3.select(".map")
+        var pointClass = "." + this.getAttribute("class").replace('circle ','');
+        var currentOpacity = d3.select(".map")
                             .selectAll(pointClass)
                             .style("opacity");
         d3.select(".map")
@@ -268,7 +291,8 @@ d3.csv("favorites.csv").then(function(data) {
         .text(function(d) { return d.place; })
     svg.on("mouseover", function(d) {
         var star = this.querySelector(".metric-icon");
-        d3.select(star).select(".star-icon")
+        d3.select(star)
+            .select(".star-icon")
             .transition()
             .duration(400)
             .style("fill", "yellow")
@@ -276,22 +300,30 @@ d3.csv("favorites.csv").then(function(data) {
         var city = this.querySelector(".metric-description").textContent.toLowerCase().replace(/\ /g,"-");
         var cityClass = "." + city;
         d3.select(cityClass)
-            .transition()
-            .duration(400)
+            .attr("d", function(d) {
+                var x = projection([d.lon, d.lat])[0];
+                var y = projection([d.lon, d.lat])[1];
+                return starToPath(x, y);
+            })
+            .style("stroke-width", 1)
             .style("fill", "#fff59d");
     })
     svg.on("mouseout", function() {  
         var star = this.querySelector(".metric-icon");  
-        d3.select(star).select(".star-icon")
+        d3.select(star)
+            .select(".star-icon")
             .transition()
-            .duration(400)
             .style("fill", "white")
             .attr("transform", "rotate(0)");
         var city = this.querySelector(".metric-description").textContent.toLowerCase().replace(/\ /g,"-");
         var cityClass = "." + city;
         d3.select(cityClass)
-            .transition()
-            .duration(400)
+            .attr("d", function(d) {
+                var x = projection([d.lon, d.lat])[0];
+                var y = projection([d.lon, d.lat])[1];
+                return circleToPath(x, y, 4);
+            })
+            .style("stroke-width", 2)
             .style("fill", "rgb(217,91,67)");
     });
     
@@ -320,6 +352,16 @@ d3.csv("favorites.csv").then(function(data) {
             .duration(400)
             .style("fill", "yellow")
             .attr("transform", "rotate(-73)");
+        var city = this.querySelector(".metric-description").textContent.toLowerCase().replace(/\ /g,"-");
+        var cityClass = "." + city;
+        d3.select(cityClass)
+            .attr("d", function(d) {
+                var x = projection([d.lon, d.lat])[0];
+                var y = projection([d.lon, d.lat])[1];
+                return starToPath(x, y);
+            })
+            .style("stroke-width", 1)
+            .style("fill", "#fff59d");
     })
     svg.on("mouseout", function() {  
         var star = this.querySelector(".metric-icon");  
@@ -328,5 +370,15 @@ d3.csv("favorites.csv").then(function(data) {
             .duration(400)
             .style("fill", "white")
             .attr("transform", "rotate(0)");
+        var city = this.querySelector(".metric-description").textContent.toLowerCase().replace(/\ /g,"-");
+        var cityClass = "." + city;
+        d3.select(cityClass)
+            .attr("d", function(d) {
+                var x = projection([d.lon, d.lat])[0];
+                var y = projection([d.lon, d.lat])[1];
+                return circleToPath(x, y, 4);
+            })
+            .style("stroke-width", 2)
+            .style("fill", "white");
     });
 });
