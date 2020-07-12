@@ -1,10 +1,10 @@
 // Width and height of map
-var width = 960;
+var width = 775;
 var height = 500;
 
 // D3 Projection
 var projection = d3.geoAlbersUsa()
-				   .translate([width/2, height/2])    // translate to center of screen
+				   .translate([width/2.15, height/2])    // translate to center of screen
 				   .scale([1000]);          // scale things down so see entire US
         
 // Define path generator
@@ -13,7 +13,7 @@ var path = d3.geoPath()               // path generator that will convert GeoJSO
 
 // Define Colors and Text for Scales
 var scaleText = ["States to Visit", "States Visited", "Cities to Visit", "Cities Visited"];
-var scaleColor = ["rgb(213,222,217)", "rgb(69,173,168)", "rgb(255,255,255)", "rgb(217,91,67)"];
+var scaleColor = ["rgb(213,222,217)", "rgb(69,173,168)", "rgb(250,250,250)", "rgb(217,91,67)"];
 
 // Define ordinal scale for color output
 var colorScale = d3.scaleOrdinal()
@@ -27,9 +27,9 @@ var symbolScale = d3.scaleOrdinal()
 
 // Create SVG element and append map to the SVG
 var svg = d3.select(".map")
-			.append("svg")
-			.attr("width", width)
-			.attr("height", height);
+            .append("svg")
+            .attr("preserveAspectRatio", "xMinYMin meet")
+            .attr("viewBox", "0 0 " + width + " " + height);
         
 // Append Div for tooltip to SVG
 var tooltip = d3.select(".map")
@@ -55,9 +55,10 @@ d3.json("states.json").then(function(json) {
             .data(json.features)
             .join("path")
             .attr("d", path)
+            .attr("class", function(d) { return d.properties.NAME.toLowerCase().replace(/\ /g,"-"); })
             .style("stroke", "#fff")
             .style("stroke-width", "1")
-            .style("fill", function(d) {
+            .style("fill", function(d,i) {
                 return colorScale(d.properties.hasVisited);
             });
 
@@ -66,7 +67,8 @@ d3.json("states.json").then(function(json) {
             .data(data)
             .join("circle")
             .attr("class", function(d) {
-               return (d.hasVisited==1) ? "map-visited":"map-will-visit";
+                var city = " " + d.place.toLowerCase().replace(/\ /g,"-");
+                return (d.hasVisited==1) ? "map-visited"+city:"map-will-visit"+city;
             })
             .attr("cx", function(d) {
                 return projection([d.lon, d.lat])[0];
@@ -76,21 +78,23 @@ d3.json("states.json").then(function(json) {
             })
             .attr("r", 4)
             .attr("fill", function(d) {
-                return (d.hasVisited==1) ? "rgb(217,91,67)":"rgb(255,255,255)";
+                return (d.hasVisited==1) ? "rgb(217,91,67)":"rgb(250,250,250)";
             })
             .attr("stroke", "rgb(217,91,67)")
             .attr("stroke-width", 2)
             .style("opacity", 0.85)
             .on("mouseover", function(d) {
+                var height = document.querySelector(".post-title").offsetHeight;
+                var left = document.querySelector(".container").offsetLeft;
                 d3.select(this)
                     .transition()
                     .attr("r", 8);
-                tooltip.transition()        
+                tooltip.transition()
                     .duration(200)
                     .style("opacity", .9);      
                 tooltip.text(d.place)
-                    .style("left", (d3.event.pageX - 32) + "px")     
-                    .style("top", this.getBBox().y + 30 + "px");
+                    .style("top", d3.event.pageY - height + 10 + "px")  // d3.select(this).attr("cy")
+                    .style("left", d3.event.pageX - left - 55 + "px");  // d3.select(this).attr("cx")
             })
             .on("mouseout", function(d) {    
                 d3.select(this)
@@ -105,95 +109,61 @@ d3.json("states.json").then(function(json) {
 
 // Define Colors and Text for Legends
 var legendTitle = ["States", "Cities & Sites"];
-var legendText = ["Will Visit", "Visited"];
-var legendCityColor = ["rgb(255,255,255)", "rgb(217,91,67)"];
+var legendText = ["Will Visit", "Visited", "Will Visit", "Visited"];
+var legendCityColor = ["rgb(250,250,250)", "rgb(217,91,67)"];
 var legendStateColor = ["rgb(213,222,217)", "rgb(69,173,168)"];
 
-// Legend for Titles
-d3.select(".legend").append("svg")
-    .attr("width", 140)
-    .attr("height", 200)
-    .attr("class", "title-legend")
-    .selectAll("text")
+// Legend titles
+d3.selectAll(".legend-title")
     .data(legendTitle)
     .join("text")
-    .attr("fill", "rgb(80, 80, 80)")
-    .attr("font-size", 12)
-    .attr("transform", function(d, i) { return "translate(0," + i * 62 + ")"; })
-    .attr("x", 20)
-    .attr("y", 20)
     .text(function(d) {return d;});
 
-// Legend for State Colors
-d3.select(".legend").append("svg")
-    .attr("width", 140)
-    .attr("height", 70)
-    .attr("class", "state-legend-color")
-    .selectAll("rect")
+// State icons for legend
+d3.select(".legend-states")
+    .selectAll(".legend-icon")
     .data(legendStateColor)
-    .join("rect")
-    .attr("transform", function(d, i) { return "translate(0," + i * 18 + ")"; })
-    .attr("x", 20)
-    .attr("y", 26)
+    .append("svg")
     .attr("width", 18)
-    .attr("height", 12)
+    .attr("height", 8)
+    .append("rect")
+    .join("rect")
+    .attr("width", 18)
+    .attr("height", 8)
     .attr("fill", function(d) { return d; });
 
-// Legend for State Text
-d3.select(".legend").append("svg")
-    .attr("width", 140)
-    .attr("height", 70)
-    .attr("class", "state-legend-text")
-    .selectAll("text")
+// Text for legend
+d3.selectAll(".legend-description")
     .data(legendText)
     .join("text")
-    .attr("fill", "rgb(80, 80, 80)")
-    .attr("font-size", 12)
-    .attr("transform", function(d, i) { return "translate(0," + i * 18 + ")"; })
-    .attr("x", 45)
-    .attr("y", 36)
-    .text(function(d) {return d;});
+    .text(function(d) { return d; });
 
-// Legend for City Colors
-d3.select(".legend").append("svg")
-    .attr("width", 140)
-    .attr("height", 70)
-    .attr("class", "city-legend-color")
-    .selectAll("circle")
+// City icons for legend
+d3.select(".legend-cities")
+    .selectAll(".legend-icon")
     .data(legendCityColor)
+    .append("svg")
+    .attr("width", 16)
+    .attr("height", 16)
+    .append("circle")
     .join("circle")
     .attr("class", function(d,i) {
         return (i==1) ? "map-visited":"map-will-visit";
     })
-    .attr("transform", function(d,i) { return "translate(0," + i * 18 + ")"; })
-    .attr("cx", 29)
-    .attr("cy", 40)
-    .attr("r", 5)
+    .attr("cx", 8)
+    .attr("cy", 8)
+    .attr("r", 4)
     .attr("stroke", "rgb(217,91,67)")
     .attr("stroke-width", 2)
     .attr("fill", function(d) { return d; });
 
-// Legend for City Text
-d3.select(".legend").append("svg")
-    .attr("width", 140)
-    .attr("height", 70)
-    .attr("class", "city-legend-text")
-    .selectAll("text")
-    .data(legendText)
-    .join("text")
-    .attr("fill", "rgb(80, 80, 80)")
-    .attr("font-size", 12)
-    .attr("transform", function(d, i) { return "translate(0," + i * 18 + ")"; })
-    .attr("x", 45)
-    .attr("y", 44)
-    .text(function(d) {return d;});
-
-d3.select(".city-legend-color")
+// Event handlers for legend
+d3.select(".legend")
     .selectAll("circle")
     .on("mouseover", function() {
         d3.select(this)
             .transition()
-            .attr("r", 8);  
+            .attr("r", 7);  
     })
     .on("mouseout", function() {    
         d3.select(this)
@@ -210,3 +180,153 @@ d3.select(".city-legend-color")
             .transition()
             .style("opacity", currentOpacity == 0.85 ? 0:0.85);
     });
+
+
+d3.csv("favorites.csv").then(function(data) {
+    var states = data.filter(function(d) {return d.type == 'state'})
+    var cities = data.filter(function(d) {return d.type == 'city'})
+    var sites = data.filter(function(d) {return d.type == 'site'})
+
+    states = states.sort((a, b) => parseFloat(a.rank) - parseFloat(b.rank));
+    cities = cities.sort((a, b) => parseFloat(a.rank) - parseFloat(b.rank));
+    sites = sites.sort((a, b) => parseFloat(a.rank) - parseFloat(b.rank));
+
+    var starGenerator = d3.symbol()
+        .type(d3.symbolStar)
+        .size(80);
+
+    var pathData = starGenerator();
+
+    var svg = d3.selectAll('.metric-state')
+        .selectAll('.metric-row')
+        .data(states)
+        .join('div')
+        .attr('class', 'metric-row')
+    svg.append('div')
+        .attr('class', 'metric-icon')
+        .append('svg')
+        .attr('width', 16)
+        .attr('height', 16)
+        .attr('class', 'star-icon')
+        .attr('viewBox', '0 0 16 16')
+        .append('path')
+        .attr('d', pathData)
+        .attr('transform', 'translate(8,8)')
+    svg.append('div')
+        .attr('class', 'metric-description')
+        .text(function(d) {
+            return d.place.replace(/\-/g," ").split(' ').map(w => w[0].toUpperCase() + w.substr(1).toLowerCase()).join(' ');
+        })
+    svg.on("mouseover", function(d) {
+        var star = this.querySelector(".metric-icon");
+        d3.select(star).select(".star-icon")
+            .transition()
+            .duration(400)
+            .style("fill", "#fff59d")
+            .attr("transform", "rotate(-73)");
+        var state = this.querySelector(".metric-description").textContent.toLowerCase().replace(/\ /g,"-");
+        var stateClass = "." + state;
+        d3.select(stateClass)
+            .transition()
+            .duration(400)
+            .style("fill", "#fff59d");
+    })
+    svg.on("mouseout", function() {  
+        var star = this.querySelector(".metric-icon");  
+        d3.select(star).select(".star-icon")
+            .transition()
+            .duration(400)
+            .style("fill", "white")
+            .attr("transform", "rotate(0)");
+        var state = this.querySelector(".metric-description").textContent.toLowerCase().replace(/\ /g,"-");
+        var stateClass = "." + state;
+        d3.select(stateClass)
+            .transition()
+            .duration(400)
+            .style("fill", function(d) {
+                return colorScale(d.properties.hasVisited);
+            });
+    });
+    
+    var svg = d3.selectAll('.metric-city')
+        .selectAll('.metric-row')
+        .data(cities)
+        .join('div')
+        .attr('class', 'metric-row')
+    svg.append('div')
+        .attr('class', 'metric-icon')
+        .append('svg')
+        .attr('width', 16)
+        .attr('height', 16)
+        .attr('class', 'star-icon')
+        .attr('viewBox', '0 0 16 16')
+        .append('path')
+        .attr('d', pathData)
+        .attr('transform', 'translate(8,8)')
+    svg.append('div')
+        .attr('class', 'metric-description')
+        .text(function(d) { return d.place; })
+    svg.on("mouseover", function(d) {
+        var star = this.querySelector(".metric-icon");
+        d3.select(star).select(".star-icon")
+            .transition()
+            .duration(400)
+            .style("fill", "yellow")
+            .attr("transform", "rotate(-73)");
+        var city = this.querySelector(".metric-description").textContent.toLowerCase().replace(/\ /g,"-");
+        var cityClass = "." + city;
+        d3.select(cityClass)
+            .transition()
+            .duration(400)
+            .style("fill", "#fff59d");
+    })
+    svg.on("mouseout", function() {  
+        var star = this.querySelector(".metric-icon");  
+        d3.select(star).select(".star-icon")
+            .transition()
+            .duration(400)
+            .style("fill", "white")
+            .attr("transform", "rotate(0)");
+        var city = this.querySelector(".metric-description").textContent.toLowerCase().replace(/\ /g,"-");
+        var cityClass = "." + city;
+        d3.select(cityClass)
+            .transition()
+            .duration(400)
+            .style("fill", "rgb(217,91,67)");
+    });
+    
+    var svg = d3.selectAll('.metric-site')
+        .selectAll('.metric-row')
+        .data(sites)
+        .join('div')
+        .attr('class', 'metric-row')
+    svg.append('div')
+        .attr('class', 'metric-icon')
+        .append('svg')
+        .attr('width', 16)
+        .attr('height', 16)
+        .attr('class', 'star-icon')
+        .attr('viewBox', '0 0 16 16')
+        .append('path')
+        .attr('d', pathData)
+        .attr('transform', 'translate(8,8)');
+    svg.append('div')
+        .attr('class', 'metric-description')
+        .text(function(d) { return d.place; })
+    svg.on("mouseover", function(d) {
+        var star = this.querySelector(".metric-icon");
+        d3.select(star).select(".star-icon")
+            .transition()
+            .duration(400)
+            .style("fill", "yellow")
+            .attr("transform", "rotate(-73)");
+    })
+    svg.on("mouseout", function() {  
+        var star = this.querySelector(".metric-icon");  
+        d3.select(star).select(".star-icon")
+            .transition()
+            .duration(400)
+            .style("fill", "white")
+            .attr("transform", "rotate(0)");
+    });
+});
