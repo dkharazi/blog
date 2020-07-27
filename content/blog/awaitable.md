@@ -7,7 +7,7 @@ katex: true
 
 The goal of the [asyncio](https://docs.python.org/3/library/asyncio.html) module is to implement asynchronous programming in Python. It achieves concurrency by using evented I/O and cooperative multitasking, whereas a module like `multithreading` achieves concurrency by focusing on threading and pre-emptive multitasking. The asyncio module focuses on coroutines, which makes this form of concurrent programming arguably more complicated than other modules, such as `multiprocessing` and `multithreading`.
 
-When looking through the asyncio documentation, I never found any great examples that involved building custom awaitables and running tasks concurrently. Since so much of asyncio depends on building its own non-blocking functions specific to asyncio, this seemed strange to me. By running custom awaitables as task, we can achieve both flexibility and concurrency. This seems to be a very powerful component of asyncio, at least for my use cases.
+When looking through the asyncio documentation, I never found any great examples that involved building custom awaitables and running them as tasks. Since so much of asyncio depends on building its own non-blocking functions specific to asyncio, this seemed strange to me. By running custom awaitables as task, we can achieve both increased flexibility and concurrency. This seems to be a very powerful component of asyncio, at least for some of my use cases.
 
 ## Motivating the Await Expression
 In Python 3.3, the `yield from` expression was introduced to wait for coroutines in asyncio applications. In Python 3.5, the [await expression](https://www.python.org/dev/peps/pep-0492/#await-expression) was introduced to replace the old `yield from` syntax in asyncio. It was introduced for multiple reasons and included various behavioral changes.
@@ -38,7 +38,7 @@ A `Future` object acts as a placeholder for data that hasn't yet been calculated
 Generally, coroutines implement the `__await__` special method, which return an iterator. There are a few other ways to define an awaitable object. However, each method involves defining or invoking an object with an `__await__` method. Therefore, if we want to define our own custom awaitable object, we need to define a class with an `__await__` special method. For a more in-depth analysis of awaitables and futures, refer to [this post](https://lucumr.pocoo.org/2016/10/30/i-dont-understand-asyncio/).
 
 ## Defining an Awaitable Object
-An asyncio application begins to get interesting once we start creating tasks. In asyncio, the `create_task()` function runs coroutines concurrently as asyncio `Tasks`. In this section, we'll create a task that runs a coroutine from a custom awaitable.
+An asyncio application begins to get interesting once we start creating tasks. In asyncio, the `create_task()` function runs coroutines concurrently as asyncio `Tasks`. In this section, we'll create a task that schedules a custom awaitable coroutine.
 
 The code below creates a custom awaitable object `RandomSleeper`. It sleeps for 5 to 10 seconds and returns a message after waking up. It also notifies us before falling asleep. This behavior is captured in the `async def` function, which creates a coroutine object. Notice, the `RandomSleeper` class must include the `__await__` special method in order to be `awaited`.
 
