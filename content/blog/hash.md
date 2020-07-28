@@ -1,6 +1,6 @@
 ---
 title: "Consistent Hashing for Load Balancing"
-date: "2020-01-05"
+date: "2020-01-03"
 draft: false
 katex: true
 ---
@@ -44,5 +44,9 @@ The table below illustrates the asymptotic [time complexities](https://en.wikipe
 | **Adding a key**    | $O(1)$          | $O(logN)$          |
 | **Removing a key**  | $O(1)$          | $O(logN)$          |
 
+Consistent Hashing isn't only used in load balancing. It can also be found in database indexing. Generally, there are a few ways to improve the performance of an RDBMS database system. First, we may be interested in very particular performance improvements, so optimizing queries may be the extent of the problem. For broader improvements to the performance of a database, we may want to perform indexing on certain tables.
+
 For database indexing, a B-tree index is used for column comparisons in expressions that use the $>$ and $\le$ operators. A B-tree index can also be used for LIKE comparisons. On the other hand, hash indexes are used for equality comparisons, which involve the $=$ and $<>$ operators. For more information about the use cases of B-tree indexing and hash indexing, refer to the [MySQL docs](https://dev.mysql.com/doc/refman/8.0/en/index-btree-hash.html).
+
+There are a few other improvements we could implement. For example, we may be interested in translating our SQL database over to a NoSQL database, [depending on the structure](https://softwareengineering.stackexchange.com/a/175546) of data being saved. In most cases, it will not be worthwhile to make this change. Lastly, we can implement a data sharding strategy, which is discussed more in the [next post](/blog/shard/).
 

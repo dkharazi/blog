@@ -1,6 +1,6 @@
 ---
 title: "Scaling a Pizza Chain"
-date: "2020-01-03"
+date: "2020-01-01"
 draft: false
 katex: true
 ---
