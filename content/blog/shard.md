@@ -1,7 +1,7 @@
 ---
 title: "Database Sharding"
 date: "2020-01-06"
-draft: true
+draft: false
 katex: true
 ---
 
