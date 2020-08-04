@@ -1,6 +1,6 @@
 ---
 title: "Collaborative Filtering with RNNs"
-date: "2020-06-26"
+date: "2020-07-27"
 draft: true
 katex: true
 ---

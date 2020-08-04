@@ -1,6 +1,6 @@
 ---
 title: "Selection Bias and COVID-19"
-date: "2020-04-11"
+date: "2020-06-11"
 draft: false
 katex: true
 ---

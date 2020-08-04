@@ -1,6 +1,6 @@
 ---
 title: "Internal Structure of Pandas DataFrames"
-date: "2020-03-15"
+date: "2020-05-15"
 draft: false
 katex: true
 ---

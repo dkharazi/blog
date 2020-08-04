@@ -1,6 +1,6 @@
 ---
 title: "Performance Benchmarks: Parquet"
-date: "2020-01-26"
+date: "2020-03-26"
 draft: false
 katex: true
 ---

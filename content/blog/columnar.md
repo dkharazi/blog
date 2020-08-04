@@ -1,6 +1,6 @@
 ---
 title: "Basics of Database Internals"
-date: "2020-01-07"
+date: "2020-03-14"
 draft: false
 katex: true
 ---

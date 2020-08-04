@@ -1,6 +1,6 @@
 ---
 title: "Creating Custom Awaitable Objects"
-date: "2020-04-04"
+date: "2020-06-04"
 draft: false
 katex: true
 ---
