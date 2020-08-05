@@ -99,7 +99,7 @@ Without using a strict schema, any data can be stored under a key in a key-value
 
 There is also a **greater range of relationships** offered by NoSQL databases, compared to relational databases. Most of these relationships are better suited for application developers.
 
-When choosing one NoSQL database over the other, a developer needs to recognize the distinctive set of requirements for his or her application. Some of these requirements will align with a key-value database, and other will align with a graph database. Generally, the type of application can guide the developer to a NoSQL database. For example, recommendation systems are better suited for graph databases, whereas session caching is better suited for key-value databases.
+When choosing one NoSQL database over the other, a developer needs to recognize the distinctive set of requirements for his or her application. Some of these requirements will align with a key-value database, and others will align with a graph database. Generally, the type of application can guide the developer to a NoSQL database. For example, recommendation systems are better suited for graph databases, whereas session caching is better suited for key-value databases.
 
 Lastly, most NoSQL database offer some form of **materialized views**, which are supported in relational databases as *virtual tables*. They aren't handled the same way as views in relational databases, but they essentially achieve the same goal. In NoSQL databases, materialized views refer to precomputed and cached queries. These queries are typically assembled using a Map-Reduce or Spark job, since many of these NoSQL databases don't support a querying langauge.
 
@@ -125,7 +125,7 @@ Aggregate-oriented databases have their obvious consequences. In general, aggreg
 ## Types of Aggregate Data Models
 After introducing the overlapping properties of NoSQL databases, we'll now explore the specifics of certain types of NoSQL databases. Various forms of NoSQL databases were briefly mentioned in the earlier segments of this post, which include key-value, document, column-family, and graph databases.
 
-A key-value and document are strongly aggregate-oriented databases, meaning they consist of many aggregates. In particular, key-value databases generally enforce fewer restrictions and offer increased flexibility, compared to both relational databases and other NoSQL databases. In certain situations, their are very minor constraints, such as size limits. However, they generally offer more freedom comparatively.
+A key-value and document are strongly aggregate-oriented databases, meaning they consist of many aggregates. In particular, key-value databases generally enforce fewer restrictions and offer increased flexibility, compared to both relational databases and other NoSQL databases. In certain situations, there are very minor constraints, such as size limits. However, they generally offer more freedom comparatively.
 
 In key-value databases, aggregates are only accessible by means of a key. As a result, values can't be queried and requires a lookup for the entire aggregate.
 
