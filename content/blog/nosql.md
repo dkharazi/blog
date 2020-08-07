@@ -11,6 +11,7 @@ Ensuring a stable form of data storage is an important decision for any business
 
 ## Table of Contents
 - [Evaluating Databases with CAP Theorem](#evaluating-databases-with-cap-theorem)
+- [Distribution and Replication](#distribution-and-replication)
 - [Power of Relational Databases](#power-of-relational-databases)
 - [Disadvantages of Relational Databases](#disadvantages-of-relational-databases)
 - [What is NoSQL](#what-is-nosql)
@@ -39,6 +40,17 @@ By observing the image below, we'll notice relational databases maintain both av
 ![CAPTheorem](/img/captheorem.svg)
 
 The CAP theorem has become controvertible over the years. In practice, these tradeoffs have become more loose for some of these databases. Using Cassandra as an example, the inclusion of a quorum almost allows the amount of consistency to be configurable. Over time, the lines separating the databases from each other are becoming blurred. Many of these databases can be made to work in any situation, but we should choose a database that is built for our requirements. A more detailed explanation about other considerations can be found [here](https://www.youtube.com/watch?v=v5e_PasMdXc).
+
+## Distribution and Replication
+In NoSQL databases, there are two basic styles of distributing data. First, there is sharding, which has been mentioned in a [previous post](/blog/shard/). Sharding distributes different data across multiple servers, so each server becomes the single source for its subset of data. In other words, sharding involves splitting up a dataset into sections, then storing each section on its own server.
+
+Replication is the second form of distributing data. Replication copies data across multiple servers, so there are multiple copies of the same dataset stored in more than one place. In other words, replication involves duplicating a dataset on another server. A system may use neither of these techniques, one of these techniques, or both of these techniques.
+
+To go one level deeper, there are two forms of replication. First, a master-worker form of replication promotes one node as the authoritative copy. In this architecture, the master typically handles writes, while the workers handle reads. Consequently, this choice causes master-worker architectures to be eventually consistent, since it takes time for the written values to be updated on the workers for reading.
+
+Secondly, a peer-to-peer form of replication doesn't use a master. Instead, it allows writes to any node, so each node coordinates with each other to synchornize their copies of data. In general, master-worker replication reduces the chance of update conflicts, but peer-to-peer replication avoids loading every write onto a single node, becoming a single point of failure.
+
+Most systems will need to choose one form of replication over the other form. Many distributed systems promote a combination of both sharding and replication. Also, most of the terminology mentioned above is defined in the NoSQL Distilled textbook, so please refer to it for more details.
 
 ## Power of Relational Databases
 Before introducing a few significant properties and use cases for relational databases, we should briefly review why we're intersted in writing to a database in the first place. Most architctures have two general ways of storing data: writing to memory or writing to disk. Keep in mind, data remains persistent by writing to disk.
